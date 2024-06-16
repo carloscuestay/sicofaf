@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   name: 'development',
-  path: 'https://app-back-co1030-dev.azurewebsites.net/api',
+  path: 'https://localhost:7162/api',
   JWT_TOKEN: 'JWT_TOKEN',
   USER_INFO: 'USER_INFO',
   PERFILES_COMISARIAS: 'PERFILES_COMISARIAS',

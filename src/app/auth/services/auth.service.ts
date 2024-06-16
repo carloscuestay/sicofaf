@@ -53,6 +53,7 @@ export class AuthService {
   }
 
   login(loginReq: any): Observable<ResponseInterface> {
+    console.log(this.api);
     return this.http
       .post<any>(`${this.api}/Ingreso`, loginReq)
       .pipe(tap((resp: ResponseInterface) => this.save(resp)));
