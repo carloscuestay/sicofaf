@@ -14,6 +14,8 @@ import { AudienciaComponent } from 'src/app/shared/audiencia/audiencia.component
 import { InicioCasosComponent } from 'src/app/shared/components/inicio-casos/inicio-casos.component';
 import { InformesDinamicosComponent } from 'src/app/shared/components/informes/informes-dinamicos/informes-dinamicos.component';
 import { FormatosVaciosComponent } from 'src/app/shared/components/informes/formatos-vacios/formatos-vacios.component';
+import { UsuarioComponent } from './usuario/usuario.component';
+import { RegistrarUsuarioComponent } from './usuario/registrar-usuario/registrar-usuario.component';
 
 export const mainRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,6 +23,7 @@ export const mainRoutes: Routes = [
   { path: 'ciudadano', component: CiudadanoComponent },
   { path: 'solicitud', component: SolicitudComponent },
   { path: 'solicitud/:id', component: SolicitudComponent },
+  { path: 'usuario', component: UsuarioComponent },
   {
     path: 'registro-presolicitud',
     component: GestionPreSolicitudComponent,
@@ -60,6 +63,10 @@ export const mainRoutes: Routes = [
   {
     path: 'registro-ciudadano',
     component: RegistrarCiudadanoComponent,
+  },
+  {
+    path: 'registro-usuario',
+    component: RegistrarUsuarioComponent,
   },
   {
     path: 'registro-ciudadano/:id_ciudadano',

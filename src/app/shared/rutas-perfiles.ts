@@ -24,6 +24,25 @@ export const perfilAuxiliar: MenuInterface[] = [
     ],
   },
   {
+    titulo: 'Configuración',
+    icon: './assets/images/documento-firmado.svg',
+    ruta: null,
+    subRutas: [
+      {
+        titulo: 'Usuarios',
+        ruta: './usuario',
+      },
+      {
+        titulo: 'Roles',
+        ruta: './agenda',
+      },
+      {
+        titulo: 'Permisos',
+        ruta: './agenda',
+      },
+    ],
+  },
+  {
     titulo: 'Reportes',
     icon: './assets/images/grafico-histograma.svg',
     ruta: null,

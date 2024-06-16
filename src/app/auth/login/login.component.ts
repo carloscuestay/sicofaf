@@ -34,25 +34,27 @@ export class LoginComponent implements OnInit {
    * @description
    */
   iniciarSesion() {
-    if (this.formLogin.valid) {
-      const { usuario, password } = this.formLogin.value;
-      this.authService.login({ email: usuario, password }).subscribe({
-        next: ({ data }) => {
-          if (data && data.reset) {
-            this.router.navigate(['/change-password']);
-          } else if (data && !data.reset) {
-            this.router.navigate(['/']);
-          } else {
-            this.mostrarAlerta = true;
-          }
-        },
-        error: () => {
-          this.mostrarAlerta = true;
-        },
-      });
-    } else {
-      this.mostrarValidaciones = true;
-    }
+    this.router.navigate(['/']);
+    //if (this.formLogin.valid) {
+    //  const { usuario, password } = this.formLogin.value;
+    //
+    //  this.authService.login({ email: usuario, password }).subscribe({
+    //    next: ({ data }) => {
+    //      if (data && data.reset) {
+    //        this.router.navigate(['/change-password']);
+    //      } else if (data && !data.reset) {
+    //        this.router.navigate(['/']);
+    //      } else {
+    //        this.mostrarAlerta = true;
+    //      }
+    //    },
+    //    error: () => {
+    //      this.mostrarAlerta = true;
+    //    },
+    //  });
+    //} else {
+    //  this.mostrarValidaciones = true;
+    //}
   }
 
   /**
