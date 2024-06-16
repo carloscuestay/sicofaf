@@ -1,8 +1,79 @@
 <div class="background-filter-private d-flex flex-column w-100 mb-3">
   <div class="d-flex align-items-center mb-3">
     <span class="title-medium">USUARIOS</span>
+
     <button  class="btn button-new ms-4" (click)="registrarUsuario()">
       Nuevo Usuario
     </button>
+  </div>
+  
+  <p class="subtitle-medium">
+    Encuentre los usuarios que previamente han sido registrados en el sistema
+  </p>
+
+  <!-- filtros -->
+  <form
+    [formGroup]="ciudadanoForm"
+    class="row"
+    autocomplete="off"
+    (submit)="consultarCiudadano()"
+  >
+    <div class="col-lg-3 mb-3">
+      <label for="nombre" class="form-label">Nombre usuario</label>
+      <input
+        type="text"
+        class="form-control"
+        [ngClass]="{
+          'input-req': isRequired('obl') && mostrarValidaciones
+        }"
+        id="nombre"
+        placeholder="Nombre usuario"
+        formControlName="nombre_ciudadano"
+        maxlength="50"
+      />
+    </div>
+    <div class="col-lg-3 mb-3">
+      <label for="apellido" class="form-label">Apellido usuario</label>
+      <input
+        type="text"
+        class="form-control"
+        [ngClass]="{
+          'input-req': isRequired('obl') && mostrarValidaciones
+        }"
+        id="apellido"
+        placeholder="Apellido usuario"
+        formControlName="apellido_ciudadano"
+        maxlength="50"
+      />
+    </div>
+    <div class="col-lg-3 mb-3">
+      <label for="documento" class="form-label">Número de documento</label>
+      <input
+        type="text"
+        class="form-control"
+        [ngClass]="{
+          'input-req': isRequired('obl') && mostrarValidaciones
+        }"
+        id="documento"
+        placeholder="Número de documento"
+        formControlName="numero_documento"
+        maxlength="20"
+      />
+    </div>
+    <div
+      class="col-lg-3 mb-3 d-flex align-items-center margin-button justify-content-lg-center"
+    >
+      <button class="btn btn-primary" type="submit">
+        <img
+          src="assets/images/busqueda.svg"
+          alt="serach"
+          class="img-fluid me-2"
+        />
+        Buscar
+      </button>
+    </div>
+  </form>
+  <div *ngIf="isRequired('obl') && mostrarValidaciones" class="msj-req">
+    Los campos de nombre y apellido o número de documento son obligatorios
   </div>
 </div>
