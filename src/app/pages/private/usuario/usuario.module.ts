@@ -10,7 +10,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   declarations: [UsuarioComponent, RegistrarUsuarioComponent],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
   ],
   exports: [UsuarioComponent],
   providers: [DatePipe]

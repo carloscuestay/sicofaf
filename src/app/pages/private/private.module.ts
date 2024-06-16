@@ -11,6 +11,7 @@ import { CiudadanoModule } from './ciudadano/ciudadano.module';
 import { SolicitudModule } from './solicitud/solicitud.module';
 import { AbogadoModule } from './abogado/abogado.module';
 import { TrabajadorSocialModule } from './trabajador-social/trabajador-social.module';
+import { UsuarioModule } from './usuario/usuario.module';
 
 @NgModule({
   declarations: [MainComponent, RecepcionComponent],
@@ -22,6 +23,7 @@ import { TrabajadorSocialModule } from './trabajador-social/trabajador-social.mo
     SharedModule,
     AbogadoModule,
     TrabajadorSocialModule,
+    UsuarioModule
   ],
 })
 export class PrivateModule {}
