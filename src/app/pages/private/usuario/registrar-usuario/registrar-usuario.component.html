@@ -19,11 +19,10 @@
             'input-req': isRequired('tipDoc') && mostrarValidaciones
           }"
           formControlName="tipDoc"
-          (change)="isColombiano($event)"
         >
           <option disabled value="">Tipo de Documento</option>
           <option
-            *ngFor="let tipoDocumento of selectTipoDocumento"
+            *ngFor="let tipoDocumento of identificaciones"
             [value]="tipoDocumento.id_Dominio"
           >
             {{ tipoDocumento.nombre_Dominio }}
@@ -205,13 +204,9 @@
             'input-req': isRequired('tipDoc') && mostrarValidaciones
           }"
           formControlName="tipDoc"
-          (change)="isColombiano($event)"
         >
           <option disabled value="">Cargo</option>
-          <option
-            *ngFor="let cargo of cargos"
-            [value]="cargo.id_Dominio"
-          >
+          <option *ngFor="let cargo of cargos" [value]="cargo.id_Dominio">
             {{ cargo.nombre_Dominio }}
           </option>
         </select>
@@ -222,7 +217,6 @@
           {{ msgObligatorio }}
         </div>
       </div>
-
     </div>
 
     <div class="row p-3 mt-3">
