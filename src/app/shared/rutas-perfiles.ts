@@ -33,12 +33,12 @@ export const perfilAuxiliar: MenuInterface[] = [
         ruta: './usuario',
       },
       {
-        titulo: 'Roles',
+        titulo: 'Permisos',
         ruta: './agenda',
       },
       {
-        titulo: 'Permisos',
-        ruta: './agenda',
+        titulo: 'Perfiles',
+        ruta: './perfil',
       },
     ],
   },

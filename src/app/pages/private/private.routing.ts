@@ -16,6 +16,8 @@ import { InformesDinamicosComponent } from 'src/app/shared/components/informes/i
 import { FormatosVaciosComponent } from 'src/app/shared/components/informes/formatos-vacios/formatos-vacios.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { RegistrarUsuarioComponent } from './usuario/registrar-usuario/registrar-usuario.component';
+import { PerfilComponent } from './perfil/perfil.component';
+import { RegistrarPerfilComponent } from './perfil/registrar-perfil/registrar-perfil.component';
 
 export const mainRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,6 +26,7 @@ export const mainRoutes: Routes = [
   { path: 'solicitud', component: SolicitudComponent },
   { path: 'solicitud/:id', component: SolicitudComponent },
   { path: 'usuario', component: UsuarioComponent },
+  { path: 'perfil', component: PerfilComponent },
   {
     path: 'registro-presolicitud',
     component: GestionPreSolicitudComponent,
@@ -63,6 +66,10 @@ export const mainRoutes: Routes = [
   {
     path: 'registro-ciudadano',
     component: RegistrarCiudadanoComponent,
+  },
+  {
+    path: 'registro-perfil',
+    component: RegistrarPerfilComponent,
   },
   {
     path: 'registro-usuario',
