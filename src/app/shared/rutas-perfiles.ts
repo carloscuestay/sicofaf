@@ -34,7 +34,7 @@ export const perfilAuxiliar: MenuInterface[] = [
       },
       {
         titulo: 'Permisos',
-        ruta: './agenda',
+        ruta: './permiso',
       },
       {
         titulo: 'Perfiles',

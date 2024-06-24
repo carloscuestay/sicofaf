@@ -19,6 +19,7 @@ import { ResponseInterface } from '../../../../interfaces/response.interface';
 import { SharedFunctions } from 'src/app/shared/functions';
 import { IUsuario } from '../../interfaces/usuario.interface';
 import { UsuarioService } from '../../usuario/services/usuario.service';
+import { PerfilService } from '../services/perfil.service';
 
 @Component({
   selector: 'app-registrar-perfil',
@@ -87,6 +88,13 @@ export class RegistrarPerfilComponent implements OnInit {
   ];
 
   usuario!: IUsuario;
+  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+
+  perfiles: any;
+  //perfifl = {
+  //  idActividad: 1,
+  //  nombreTarea: "Actualizar involucrados"
+  //}
 
   /**
    * @description valida si viene en modo editar
@@ -102,15 +110,25 @@ export class RegistrarPerfilComponent implements OnInit {
     private sharedService: SharedService,
     private _usuarioService: UsuarioService,
     private activedRoute: ActivatedRoute,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private _perfilService: PerfilService
   ) {}
 
   ngOnInit(): void {
 
     this.cargarForm();
     this.resetValueChange();
-    this.cargarSelects();
+    //this.cargarSelects();
+    this.getPerfiles();
     //this.cargarFormEdit();
+  }
+
+  private getPerfiles() {
+    this._perfilService.getPerfiles().subscribe((resp) => {
+      if (resp.statusCode === CodigosRespuesta.OK) {
+        this.perfiles = resp.data;
+      }
+    });
   }
 
   /**
@@ -129,6 +147,7 @@ export class RegistrarPerfilComponent implements OnInit {
         celular: ['', [Validators.pattern(Regex.ALFA)]],
         correoElectronico: '',
         estado: [],
+        perfil: [],
 
       },
       {

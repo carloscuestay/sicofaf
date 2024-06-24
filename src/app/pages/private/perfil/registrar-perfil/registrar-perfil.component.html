@@ -68,6 +68,17 @@
         </div>
       </div>
 
+      <div class="row col-4">
+        <label>Estado</label>
+        <mat-form-field>
+          <mat-label>Activades*</mat-label>
+          <mat-select formControlName="perfil" multiple>
+            <div *ngFor="let perfil of perfiles">
+              <mat-option [value]="perfil.idActividad">{{ perfil.nombreTarea }}</mat-option>
+            </div>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
     </div>
 
