@@ -22,10 +22,10 @@ export class PerfilComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   public columnas: string[] = [
-    'Nombre',
-    'Código',
-    'Estado',
-    'accion',
+    'nombrePerfil',
+    'codigo', 
+    'estado',
+    'accion'
   ];
 
   public dataSource = new MatTableDataSource<CiudadanoInterface>([]);
@@ -74,12 +74,14 @@ export class PerfilComponent implements OnInit {
         next: (data: ResponseInterface) => {
           console.log(data)
           if (data.statusCode === CodigosRespuesta.OK) {
-            if (data.data > 0) {
+            if (data.data.length > 0) {
               this.listaPerfiles = data.data;
               this.dataSource = new MatTableDataSource(this.listaPerfiles);
               this.mostrarValidaciones = false;
               this.dataSource.paginator = this.paginator;
               this.ocultarPaginador = false;
+              console.log(this.listaPerfiles);
+              console.log(this.dataSource);
             } else {
               this.limpiarRegistros();
             }
