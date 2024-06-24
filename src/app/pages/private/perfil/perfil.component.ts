@@ -22,17 +22,14 @@ export class PerfilComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   public columnas: string[] = [
-    'nombres',
-    'apellidos',
-    'tipo_documento',
-    'numero_documento',
-    'numero_solicitudes',
-    'fecha_ult_solicitud',
+    'Nombre',
+    'Código',
+    'Estado',
     'accion',
   ];
 
   public dataSource = new MatTableDataSource<CiudadanoInterface>([]);
-  public listaCiudadano: CiudadanoInterface[] = [];
+  public listaPerfiles: any [] = [];
   public ciudadanoForm!: FormGroup;
   public mostrarValidaciones: boolean = false;
   public formSubmitted: boolean = false;
@@ -78,8 +75,8 @@ export class PerfilComponent implements OnInit {
           console.log(data)
           if (data.statusCode === CodigosRespuesta.OK) {
             if (data.data > 0) {
-              this.listaCiudadano = data.data;
-              this.dataSource = new MatTableDataSource(this.listaCiudadano);
+              this.listaPerfiles = data.data;
+              this.dataSource = new MatTableDataSource(this.listaPerfiles);
               this.mostrarValidaciones = false;
               this.dataSource.paginator = this.paginator;
               this.ocultarPaginador = false;
@@ -106,8 +103,8 @@ export class PerfilComponent implements OnInit {
    * @description limpia los registros de la grilla
    */
   limpiarRegistros() {
-    this.listaCiudadano = [];
-    this.dataSource = new MatTableDataSource(this.listaCiudadano);
+    this.listaPerfiles = [];
+    this.dataSource = new MatTableDataSource(this.listaPerfiles);
     this.mostrarValidaciones = false;
   }
 

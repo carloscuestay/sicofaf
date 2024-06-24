@@ -22,7 +22,7 @@ export class PerfilService {
 
   public getPerfiles(): Observable<ResponseInterface> {
     return this.http.get<ResponseInterface>(
-      `${this.api}/Login/ListarPerfiles`
+      `${this.api}/Login/ListaPerfiles`
     );
   }
 
