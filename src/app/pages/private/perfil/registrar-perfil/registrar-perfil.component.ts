@@ -248,7 +248,7 @@ export class RegistrarPerfilComponent implements OnInit {
    */
   public modalConfirmacion() {
     Modales.modalConfirmacion(
-      '¿Esta seguro que desea cancelar la creación del ciudadano?',
+      '¿Esta seguro que desea cancelar la creación del perfil?',
       this.dialog,
       'assets/images/exclamacion.svg'
     ).subscribe((resp) => {
@@ -350,12 +350,12 @@ export class RegistrarPerfilComponent implements OnInit {
     this._perfilService.registrarPerfil(this.myForm.value).subscribe({
       next: (resp: ResponseInterface) => {
         if (resp.statusCode === CodigosRespuesta.OK) {
+          this.myForm.reset()
           Modales.modalExito(
             Mensajes.MENSAJE_EXITO_PERFIL,
             'assets/images/check.svg',
             this.dialog
           );
-          this.historialCiudadano(resp.data.datosPaginados);
         }
       },
       error: () => {

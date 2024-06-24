@@ -20,6 +20,12 @@ export class PerfilService {
     );
   }
 
+  public getPerfiles(): Observable<ResponseInterface> {
+    return this.http.get<ResponseInterface>(
+      `${this.api}/Login/ListarPerfiles`
+    );
+  }
+
   public registrarPerfil(request: IPerfil): Observable<ResponseInterface> {
     return this.http.post<ResponseInterface>(
       `${this.api}/PerfilPermisos/CrearPerfil`,request

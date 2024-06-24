@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { ResponseInterface } from 'src/app/interfaces/response.interface';
 import { CodigosRespuesta, Mensajes } from 'src/app/constants';
 import { Modales } from 'src/app/shared/modals';
+import { PerfilService } from './services/perfil.service';
 
 @Component({
   selector: 'app-perfil',
@@ -40,7 +41,7 @@ export class PerfilComponent implements OnInit {
   currentUser!: UserInterface | undefined;
 
   constructor(
-    private ciudadanoService: CiudadanoService,
+    private _perfilService: PerfilService,
     private router: Router,
     private fb: FormBuilder,
     private dialog: MatDialog,
@@ -50,9 +51,9 @@ export class PerfilComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.authService.currentUserValue?.perfil === 'COM') {
-      this.mostrarOcultarBoton = false;
-    }
+    //if (this.authService.currentUserValue?.perfil === 'COM') {
+    //  this.mostrarOcultarBoton = false;
+    //}
 
     this.ciudadanoForm = this.fb.group({
       nombre_ciudadano: '',
@@ -68,15 +69,16 @@ export class PerfilComponent implements OnInit {
    * @description llama servicio getCiudadanos
    */
   consultarCiudadano() {
-    this.validarCampoObligatorio();
+    //this.validarCampoObligatorio();
 
-    if (this.ciudadanoForm.valid) {
+    if (true) {
       this.formSubmitted = true;
-      this.ciudadanoService.getCiudadanos(this.ciudadanoForm.value).subscribe({
+      this._perfilService.getPerfiles().subscribe({
         next: (data: ResponseInterface) => {
+          console.log(data)
           if (data.statusCode === CodigosRespuesta.OK) {
-            if (data.data.totalRegistros > 0) {
-              this.listaCiudadano = data.data.datosPaginados;
+            if (data.data > 0) {
+              this.listaCiudadano = data.data;
               this.dataSource = new MatTableDataSource(this.listaCiudadano);
               this.mostrarValidaciones = false;
               this.dataSource.paginator = this.paginator;
