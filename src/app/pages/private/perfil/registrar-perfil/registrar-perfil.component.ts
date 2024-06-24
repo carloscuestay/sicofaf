@@ -212,22 +212,9 @@ export class RegistrarPerfilComponent implements OnInit {
   /**
    * @description carga los selects del formulario
    */
-  private cargarSelects() {
-    this.cargaSelectTipoDocumento();
-  }
-
   /**
    * @description carga el select de Tipo Documento
    */
-  private cargaSelectTipoDocumento() {
-    this.sharedService
-      .getDominio('Tipo_identificacion')
-      .subscribe((TipoDocumento) => {
-        if (TipoDocumento.statusCode === CodigosRespuesta.OK) {
-          this.selectTipoDocumento = TipoDocumento.data;
-        }
-      });
-  }
 
   public isChecked(campo: string): boolean {
     return this.myForm.get(campo)?.value;
@@ -360,7 +347,7 @@ export class RegistrarPerfilComponent implements OnInit {
 
   private registrarPerfil() {
 
-    this._perfilService.registrarPerfil(this.myForm.value()).subscribe({
+    this._perfilService.registrarPerfil(this.myForm.value).subscribe({
       next: (resp: ResponseInterface) => {
         if (resp.statusCode === CodigosRespuesta.OK) {
           Modales.modalExito(

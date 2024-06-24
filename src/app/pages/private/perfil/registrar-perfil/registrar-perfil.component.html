@@ -74,7 +74,7 @@
           <mat-label>Activad</mat-label>
           <mat-select formControlName="actividades" multiple>
             <div *ngFor="let actividad of actividades">
-              <mat-option [value]="perfil.idActividad">{{ perfil.nombreTarea }}</mat-option>
+              <mat-option [value]="actividad.idActividad">{{ actividad.nombreTarea }}</mat-option>
             </div>
           </mat-select>
         </mat-form-field>

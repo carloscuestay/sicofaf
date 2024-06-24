@@ -48,7 +48,7 @@ export const Mensajes = {
   MENSAJE_CAMPO_OBSERVACIONES: `Campo observaciones obligatorio`,
   MENSAJE_SEG_EXITO: `Seguimiento creado exitosamente`,
   MENSAJE_EXITO: `Se guardó exitosamente`,
-  MENSAJE_EXITO_PERFIL: `Ciudadano registrado de manera exitosa.`,
+  MENSAJE_EXITO_PERFIL: `Perfil registrado de manera exitosa.`,
 };
 
 export const Regex = {
