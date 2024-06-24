@@ -16,37 +16,37 @@
           type="text"
           class="form-control"
           [ngClass]="{
-            'input-req': isRequired('pnombre') && mostrarValidaciones
+            'input-req': isRequired('nombrePerfil') && mostrarValidaciones
           }"
-          formControlName="pnombre"
+          formControlName="nombrePerfil"
           maxlength="50"
-          placeholder="Texto"
+          placeholder="nombre"
         />
 
         <div
           class="msj-req"
-          *ngIf="isRequired('pnombre') && mostrarValidaciones"
+          *ngIf="isRequired('nombrePerfil') && mostrarValidaciones"
         >
           {{ msgObligatorio }}
         </div>
       </div>
 
       <div class="col-4 p-3">
-        <label>Codigo*</label>
+        <label>Código*</label>
 
         <input
           type="text"
           class="form-control"
           [ngClass]="{
-            'input-req': isRequired('papellidos') && mostrarValidaciones
+            'input-req': isRequired('codigo') && mostrarValidaciones
           }"
-          formControlName="papellidos"
+          formControlName="codigo"
           maxlength="50"
-          placeholder="Texto"
+          placeholder="codigo"
         />
         <div
           class="msj-req"
-          *ngIf="isRequired('papellidos') && mostrarValidaciones"
+          *ngIf="isRequired('codigo') && mostrarValidaciones"
         >
           {{ msgObligatorio }}
         </div>
@@ -69,15 +69,22 @@
       </div>
 
       <div class="row col-4">
-        <label>Estado</label>
+        <label>Actividades*</label>
         <mat-form-field>
-          <mat-label>Activades*</mat-label>
-          <mat-select formControlName="perfil" multiple>
-            <div *ngFor="let perfil of perfiles">
+          <mat-label>Activad</mat-label>
+          <mat-select formControlName="actividades" multiple>
+            <div *ngFor="let actividad of actividades">
               <mat-option [value]="perfil.idActividad">{{ perfil.nombreTarea }}</mat-option>
             </div>
           </mat-select>
         </mat-form-field>
+
+        <div
+          class="msj-req"
+          *ngIf="isRequired('actividades') && mostrarValidaciones"
+        >
+          {{ msgObligatorio }}
+        </div>
       </div>
 
     </div>

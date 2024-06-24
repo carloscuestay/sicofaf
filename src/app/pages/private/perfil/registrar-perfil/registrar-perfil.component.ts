@@ -87,10 +87,9 @@ export class RegistrarPerfilComponent implements OnInit {
     },
   ];
 
-  usuario!: IUsuario;
-  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
 
-  perfiles: any;
+
+  public actividades: any;
   //perfifl = {
   //  idActividad: 1,
   //  nombreTarea: "Actualizar involucrados"
@@ -124,9 +123,9 @@ export class RegistrarPerfilComponent implements OnInit {
   }
 
   private getPerfiles() {
-    this._perfilService.getPerfiles().subscribe((resp) => {
+    this._perfilService.getActividades().subscribe((resp) => {
       if (resp.statusCode === CodigosRespuesta.OK) {
-        this.perfiles = resp.data;
+        this.actividades = resp.data;
       }
     });
   }
@@ -137,25 +136,11 @@ export class RegistrarPerfilComponent implements OnInit {
   private cargarForm() {
     this.myForm = this.fb.group(
       {
-        pnombre: ['', [Validators.required, Validators.pattern(Regex.ALFA)]],
-        snombre: ['', [Validators.pattern(Regex.ALFA)]],
-        papellidos: ['', [Validators.required, Validators.pattern(Regex.ALFA)]],
-        sapellidos: ['', [Validators.pattern(Regex.ALFA)]],
-        tipDoc: ['', [Validators.required]],
-        nroDoc: ['', [Validators.required, Validators.pattern(Regex.ALFA)]],
-        telefono: ['', [Validators.pattern(Regex.ALFA)]],
-        celular: ['', [Validators.pattern(Regex.ALFA)]],
-        correoElectronico: '',
-        estado: [],
-        perfil: [],
-
+        nombrePerfil: ['', [Validators.required]],
+        codigo: ['', [Validators.required]],
+        estado: [true],
+        actividades: ['',[Validators.required]],
       },
-      {
-        validators: [
-          validaciones.validarDatosContacto,
-          validaciones.validarCorreo,
-        ],
-      }
     );
   }
 
@@ -358,42 +343,28 @@ export class RegistrarPerfilComponent implements OnInit {
   }
 
   /**
-   * @description para registrar nuevo ciudadano se valida que no exista en Base de Datos y si no existe, lo registra
+   * @description para registrar nuevo Perfil se valida que no exista en Base de Datos y si no existe, lo registra
    */
   public registrar(): void {
-    console.table(this.myForm.value)
     this.mostrarValidaciones = false;
-
     if (this.myForm.invalid) {
       this.mostrarValidaciones = true;
-      console.log("invalido")
     } else {
       if (this.isUpdate) {
         //this.actualizarCiudadano();
       } else {
-        console.log("nvalido")
-        this.insertarCiudadano();
+        this.registrarPerfil();
       }
     }
   }
 
-  /**
-   * @description Solo permite ingresar numeros
-   */
-  public soloNumero(campo: string) {
-    SharedFunctions.soloNumero(campo, this.myForm);
-  }
+  private registrarPerfil() {
 
-  /**
-   * @description inserta el ciudadano
-   */
-  private insertarCiudadano() {
-
-    this._usuarioService.registrarUsuario(this.returnUsuario()).subscribe({
+    this._perfilService.registrarPerfil(this.myForm.value()).subscribe({
       next: (resp: ResponseInterface) => {
         if (resp.statusCode === CodigosRespuesta.OK) {
           Modales.modalExito(
-            Mensajes.MENSAJE_EXITO_CIUDADANO,
+            Mensajes.MENSAJE_EXITO_PERFIL,
             'assets/images/check.svg',
             this.dialog
           );
@@ -408,20 +379,6 @@ export class RegistrarPerfilComponent implements OnInit {
         );
       },
     });
-  }
-
-  private returnUsuario(): IUsuario {
-    return this.usuario = {
-      nombres: this.myForm.get('pnombre')?.value + " "+this.myForm.get('snombre')?.value,
-      apellidos: this.myForm.get('papellidos')?.value + " "+this.myForm.get('sapellidos')?.value,
-      correoElectronico: this.myForm.get('correoElectronico')?.value,
-      telefonoFijo: this.myForm.get('telefono')?.value,
-      celular: this.myForm.get('celular')?.value,
-      numeroDocumento: this.myForm.get('nroDoc')?.value,
-      tipoDocumento: (Number) (this.myForm.get('tipDoc')?.value),
-      perfiles: [1],
-      idcomisaria: 1
-    }
   }
 
   /**
