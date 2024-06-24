@@ -140,6 +140,6 @@ export class PerfilComponent implements OnInit {
   }
 
   editar(){
-    this.router.navigate(['/registro-perfil', 1]);
+    this.router.navigate(['/registro-perfil', 16]);
   }
 }

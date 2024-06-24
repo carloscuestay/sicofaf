@@ -119,9 +119,10 @@ export class RegistrarPerfilComponent implements OnInit {
         this.id_perfil = params['id_perfil'];
         this.getPerfil().then(() => {
           if (this.perfil) {
-            console.log(this.perfil);
+            console.log(this.perfil.actividades);
             this.myForm.patchValue(this.perfil);
-            console.log(this.myForm.value)
+            console.log(this.myForm.get('actividades')?.value)
+            this.setInitialValues(this.perfil.actividades);
             // <!--registro_completo es el campo requiereModificacion-- >
             // <!--si es true mostramos la opcion de editar-- >
             // <!--si es false ocultamos la opcion de editar-- >
@@ -132,6 +133,15 @@ export class RegistrarPerfilComponent implements OnInit {
         });
       }
     });
+  }
+  setInitialValues(selectedActividades:any): void {
+    const validValues = selectedActividades
+      .map((actividad: { idActividad: any; }) => actividad.idActividad)
+      .filter((idActividad: any) => 
+        this.actividades.some((actividad: { idActividad: any; }) => actividad.idActividad === idActividad)
+      );
+      console.log(validValues);
+    this.myForm.patchValue({ actividades: validValues });
   }
 
 
@@ -183,6 +193,8 @@ export class RegistrarPerfilComponent implements OnInit {
       }
 
       this.perfil = result.data;
+      console.log(result.data)
+     
     } catch (error: any) {
       SharedFunctions.getErrorMessage(error);
       this.modales.modalInformacion(Mensajes.MENSAJE_ERROR_G).subscribe(() => {
