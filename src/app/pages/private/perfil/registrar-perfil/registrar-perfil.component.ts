@@ -114,17 +114,14 @@ export class RegistrarPerfilComponent implements OnInit {
   ) {
     this.activated.params.subscribe((params) => {
       if (!params['id_perfil']) {
-        this.modales
-          .modalInformacion(
-            'Error de enrutamiento: No se obtuvo el Id del permiso'
-          )
-          .subscribe(() => {
-            history.back();
-          });
+        return;
       } else {
         this.id_perfil = params['id_perfil'];
         this.getPerfil().then(() => {
-          if (this.ciudadano) {
+          if (this.perfil) {
+            console.log(this.perfil);
+            this.myForm.patchValue(this.perfil);
+            console.log(this.myForm.value)
             // <!--registro_completo es el campo requiereModificacion-- >
             // <!--si es true mostramos la opcion de editar-- >
             // <!--si es false ocultamos la opcion de editar-- >
@@ -171,41 +168,21 @@ export class RegistrarPerfilComponent implements OnInit {
   }
 
   public async getPerfil() {
+    let result;
     try {
-      if (!this.id_perfil) {
-        this.modales
-          .modalInformacion(
-            'Error de enrutamiento: No se obtuvo la identificacion del ciudadano'
-          )
-          .subscribe(() => {
-            history.back();
-          });
-        return;
+      if (this.id_perfil) {
+        result = await lastValueFrom(
+          this._perfilService.getPerfil(this.id_perfil)
+        );
+        
       }
-      const result = await lastValueFrom(
-        this._perfilService.getPerfil(this.id_perfil)
-      );
-
       console.log(result);
       if (!result) {
-        this.modales
-          .modalInformacion('No se encontró la información del ciudadano.')
-          .subscribe(() => {
-            history.back();
-          });
+     
         return;
       }
-      if (result.statusCode != 200) {
-        this.modales.modalInformacion(result.message);
-        return;
-      }
-      if (!result.data || !result.data.datosPaginados) {
-        this.modales.modalInformacion(
-          'Ocurrió un error al consultar los datos del ciudadano.'
-        );
-        return;
-      }
-      this.ciudadano = result.data.datosPaginados;
+
+      this.perfil = result.data;
     } catch (error: any) {
       SharedFunctions.getErrorMessage(error);
       this.modales.modalInformacion(Mensajes.MENSAJE_ERROR_G).subscribe(() => {
