@@ -20,6 +20,12 @@ export class PerfilService {
     );
   }
 
+  public getPerfil(id: number): Observable<ResponseInterface> {
+    return this.http.get<ResponseInterface>(
+      `${this.api}/PerfilPermisos/ActividadesPorPerfil/${id}`
+    );
+  }
+
   public getPerfiles(): Observable<ResponseInterface> {
     return this.http.get<ResponseInterface>(
       `${this.api}/Login/ListaPerfiles`

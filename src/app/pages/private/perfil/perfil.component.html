@@ -119,7 +119,7 @@
           matTooltipHideDelay="500"
           matTooltipClass="background-tooltip"
           aria-label="Button that displays a tooltip when focused or hovered over"
-          (click)="verHistorialCiudadano(row)"
+          (click)="verPerfil(row)"
         >
           <img src="assets/images/eye.svg" alt="detail" class="img-fluid" />
         </button>
@@ -137,3 +137,7 @@
   >
   </mat-paginator>
 </div>
+
+<button  class="btn button-new ms-4" (click)="editar()">
+  Nuevo Perfil
+</button>

@@ -5,7 +5,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
-import { switchMap } from 'rxjs';
+import { lastValueFrom, switchMap } from 'rxjs';
 import { CiudadanoService } from '../../ciudadano/services/ciudadano.service';
 import { CodigosRespuesta, Mensajes, Regex } from 'src/app/constants';
 import * as validaciones from '../../ciudadano/registrar-ciudadano/validators';
@@ -90,28 +90,54 @@ export class RegistrarPerfilComponent implements OnInit {
 
 
   public actividades: any;
-  //perfifl = {
-  //  idActividad: 1,
-  //  nombreTarea: "Actualizar involucrados"
-  //}
+
+  private id_perfil: number | undefined = undefined;
+  public perfil!: any;
 
   /**
    * @description valida si viene en modo editar
    */
   private get isUpdate(): boolean {
-    return this.activedRoute.snapshot.params['id_ciudadano'] !== undefined;
+    return this.activated.snapshot.params['id_perfil'] !== undefined;
   }
 
   constructor(
     private fb: FormBuilder,
     public dialog: MatDialog,
+    private modales: Modales,
     private router: Router,
     private sharedService: SharedService,
     private _usuarioService: UsuarioService,
-    private activedRoute: ActivatedRoute,
+    private activated: ActivatedRoute,
     private datePipe: DatePipe,
     private _perfilService: PerfilService
-  ) {}
+  ) {
+    this.activated.params.subscribe((params) => {
+      if (!params['id_perfil']) {
+        this.modales
+          .modalInformacion(
+            'Error de enrutamiento: No se obtuvo el Id del permiso'
+          )
+          .subscribe(() => {
+            history.back();
+          });
+      } else {
+        this.id_perfil = params['id_perfil'];
+        this.getPerfil().then(() => {
+          if (this.ciudadano) {
+            // <!--registro_completo es el campo requiereModificacion-- >
+            // <!--si es true mostramos la opcion de editar-- >
+            // <!--si es false ocultamos la opcion de editar-- >
+          //  this.ciudadano.requiereModificacon =
+          //    this.ciudadano?.registro_completo;
+          //  this.getSolicitudesCiudadano();
+          }
+        });
+      }
+    });
+  }
+
+
 
   ngOnInit(): void {
 
@@ -142,6 +168,50 @@ export class RegistrarPerfilComponent implements OnInit {
         actividades: ['',[Validators.required]],
       },
     );
+  }
+
+  public async getPerfil() {
+    try {
+      if (!this.id_perfil) {
+        this.modales
+          .modalInformacion(
+            'Error de enrutamiento: No se obtuvo la identificacion del ciudadano'
+          )
+          .subscribe(() => {
+            history.back();
+          });
+        return;
+      }
+      const result = await lastValueFrom(
+        this._perfilService.getPerfil(this.id_perfil)
+      );
+
+      console.log(result);
+      if (!result) {
+        this.modales
+          .modalInformacion('No se encontró la información del ciudadano.')
+          .subscribe(() => {
+            history.back();
+          });
+        return;
+      }
+      if (result.statusCode != 200) {
+        this.modales.modalInformacion(result.message);
+        return;
+      }
+      if (!result.data || !result.data.datosPaginados) {
+        this.modales.modalInformacion(
+          'Ocurrió un error al consultar los datos del ciudadano.'
+        );
+        return;
+      }
+      this.ciudadano = result.data.datosPaginados;
+    } catch (error: any) {
+      SharedFunctions.getErrorMessage(error);
+      this.modales.modalInformacion(Mensajes.MENSAJE_ERROR_G).subscribe(() => {
+        history.back();
+      });
+    }
   }
 
   /**

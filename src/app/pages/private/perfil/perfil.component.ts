@@ -23,7 +23,7 @@ export class PerfilComponent implements OnInit {
 
   public columnas: string[] = [
     'nombrePerfil',
-    'codigo', 
+    'codigo',
     'estado',
     'accion'
   ];
@@ -80,8 +80,6 @@ export class PerfilComponent implements OnInit {
               this.mostrarValidaciones = false;
               this.dataSource.paginator = this.paginator;
               this.ocultarPaginador = false;
-              console.log(this.listaPerfiles);
-              console.log(this.dataSource);
             } else {
               this.limpiarRegistros();
             }
@@ -136,12 +134,12 @@ export class PerfilComponent implements OnInit {
     }
   }
 
-  /**
-   * @description envía a form historial del ciudadano
-   * @param idCiudadano id del ciudadano
-   */
-  verHistorialCiudadano(ciudadano: CiudadanoInterface) {
-    sessionStorage.setItem('ciudadano', JSON.stringify(ciudadano));
-    this.router.navigate(['/historial-ciudadano', ciudadano.idCiudadano]);
+  verPerfil(permiso: any) {
+    sessionStorage.setItem('permiso', JSON.stringify(permiso));
+    this.router.navigate(['/historial-ciudadano', permiso.idPerfil]);
+  }
+
+  editar(){
+    this.router.navigate(['/registro-perfil', 1]);
   }
 }
