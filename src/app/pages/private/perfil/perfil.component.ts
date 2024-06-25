@@ -72,7 +72,6 @@ export class PerfilComponent implements OnInit {
       this.formSubmitted = true;
       this._perfilService.getPerfiles().subscribe({
         next: (data: ResponseInterface) => {
-          console.log(data)
           if (data.statusCode === CodigosRespuesta.OK) {
             if (data.data.length > 0) {
               this.listaPerfiles = data.data;
@@ -134,12 +133,13 @@ export class PerfilComponent implements OnInit {
     }
   }
 
-  verPerfil(permiso: any) {
-    sessionStorage.setItem('permiso', JSON.stringify(permiso));
-    this.router.navigate(['/historial-ciudadano', permiso.idPerfil]);
+  verPerfil(perfil: any) {
+    this.router.navigate(['/registro-perfil', perfil.idPerfil]);
+    //sessionStorage.setItem('permiso', JSON.stringify(permiso));
+    //this.router.navigate(['/historial-ciudadano', permiso.idPerfil]);
   }
 
   editar(){
-    this.router.navigate(['/registro-perfil', 16]);
+    
   }
 }

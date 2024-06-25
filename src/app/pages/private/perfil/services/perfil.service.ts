@@ -36,5 +36,13 @@ export class PerfilService {
     return this.http.post<ResponseInterface>(
       `${this.api}/PerfilPermisos/CrearPerfil`,request
     );
+    
+  }
+  public actualizarPerfil(request: IPerfil, idPerfil: any): Observable<ResponseInterface> {
+    request.idPerfil=idPerfil;
+    return this.http.post<ResponseInterface>(
+      `${this.api}/PerfilPermisos/EditarPerfil`,request,
+    );
+    
   }
 }

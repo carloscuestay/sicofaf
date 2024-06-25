@@ -19,6 +19,7 @@ import { ResponseInterface } from '../../../../interfaces/response.interface';
 import { SharedFunctions } from 'src/app/shared/functions';
 import { UsuarioService } from '../services/usuario.service';
 import { IUsuario } from '../../interfaces/usuario.interface';
+import { PerfilService } from '../../perfil/services/perfil.service';
 
 
 @Component({
@@ -56,6 +57,7 @@ export class RegistrarUsuarioComponent implements OnInit {
   public ciudadano!: interfaces.CiudadanoInterface;
   public idCiudadano!: number;
   public titulo: string = 'REGISTRO DE NUEVO USUARIO';
+  public perfiles:[]=[];
 
   cargos : any = [
    {
@@ -103,6 +105,7 @@ export class RegistrarUsuarioComponent implements OnInit {
     private sharedService: SharedService,
     private _usuarioService: UsuarioService,
     private activedRoute: ActivatedRoute,
+    private _perfilService: PerfilService,
     private datePipe: DatePipe
   ) {}
 
@@ -129,6 +132,7 @@ export class RegistrarUsuarioComponent implements OnInit {
         telefono: ['', [Validators.pattern(Regex.ALFA)]],
         celular: ['', [Validators.pattern(Regex.ALFA)]],
         correoElectronico: '',
+        perfiles: ['',[Validators.required]],
 
       },
       {
@@ -210,6 +214,7 @@ export class RegistrarUsuarioComponent implements OnInit {
    */
   private cargarSelects() {
     this.cargaSelectTipoDocumento();
+    this.getPerfiles();
   }
 
   /**
@@ -224,6 +229,14 @@ export class RegistrarUsuarioComponent implements OnInit {
         }
       });
   }
+  private getPerfiles() {
+    this._perfilService.getPerfiles().subscribe((resp) => {
+      if (resp.statusCode === CodigosRespuesta.OK) {
+        this.perfiles = resp.data;
+      }
+    });
+  }
+
 
   public isChecked(campo: string): boolean {
     return this.myForm.get(campo)?.value;
@@ -390,8 +403,8 @@ export class RegistrarUsuarioComponent implements OnInit {
       celular: this.myForm.get('celular')?.value,
       numeroDocumento: this.myForm.get('nroDoc')?.value,
       tipoDocumento: (Number) (this.myForm.get('tipDoc')?.value),
-      perfiles: [1],
-      idcomisaria: 1
+      perfiles: this.myForm.get('perfiles')?.value || [],
+      idcomisaria: 10
     }
   }
 

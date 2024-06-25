@@ -56,7 +56,7 @@ export class RegistrarPerfilComponent implements OnInit {
   public ciudadano!: interfaces.CiudadanoInterface;
   public idCiudadano!: number;
   public titulo: string = 'REGISTRO PERFIL';
-
+  public tituloSubmit : string = 'Registro Perfil'
   cargos : any = [
    {
      id_Dominio: '1',
@@ -119,16 +119,9 @@ export class RegistrarPerfilComponent implements OnInit {
         this.id_perfil = params['id_perfil'];
         this.getPerfil().then(() => {
           if (this.perfil) {
-            console.log(this.perfil.actividades);
+            this.tituloSubmit = 'Modificar Perfil';
             this.myForm.patchValue(this.perfil);
-            console.log(this.myForm.get('actividades')?.value)
             this.setInitialValues(this.perfil.actividades);
-            // <!--registro_completo es el campo requiereModificacion-- >
-            // <!--si es true mostramos la opcion de editar-- >
-            // <!--si es false ocultamos la opcion de editar-- >
-          //  this.ciudadano.requiereModificacon =
-          //    this.ciudadano?.registro_completo;
-          //  this.getSolicitudesCiudadano();
           }
         });
       }
@@ -140,7 +133,6 @@ export class RegistrarPerfilComponent implements OnInit {
       .filter((idActividad: any) => 
         this.actividades.some((actividad: { idActividad: any; }) => actividad.idActividad === idActividad)
       );
-      console.log(validValues);
     this.myForm.patchValue({ actividades: validValues });
   }
 
@@ -186,14 +178,12 @@ export class RegistrarPerfilComponent implements OnInit {
         );
         
       }
-      console.log(result);
       if (!result) {
      
         return;
       }
 
       this.perfil = result.data;
-      console.log(result.data)
      
     } catch (error: any) {
       SharedFunctions.getErrorMessage(error);
@@ -397,11 +387,36 @@ export class RegistrarPerfilComponent implements OnInit {
       this.mostrarValidaciones = true;
     } else {
       if (this.isUpdate) {
-        //this.actualizarCiudadano();
+        console.log("Modificar")
+        this.modificarPerfil()
       } else {
         this.registrarPerfil();
+        console.log("NO modificar")
+
       }
     }
+  }
+  private modificarPerfil() {
+
+    this._perfilService.actualizarPerfil(this.myForm.value,this.id_perfil).subscribe({
+      next: (resp: ResponseInterface) => {
+        if (resp.statusCode === CodigosRespuesta.OK) {
+          this.myForm.reset()
+          Modales.modalExito(
+            Mensajes.MENSAJE_EXITO_ACTUALIZAR_PERFIL,
+            'assets/images/check.svg',
+            this.dialog
+          );
+        }
+      },
+      error: () => {
+        Modales.modalExito(
+          Mensajes.MENSAJE_ERROR,
+          'assets/images/exclamacion.svg',
+          this.dialog
+        );
+      },
+    });
   }
 
   private registrarPerfil() {

@@ -22,7 +22,7 @@
         >
           <option disabled value="">Tipo de Documento</option>
           <option
-            *ngFor="let tipoDocumento of identificaciones"
+            *ngFor="let tipoDocumento of selectTipoDocumento"
             [value]="tipoDocumento.id_Dominio"
           >
             {{ tipoDocumento.nombre_Dominio }}
@@ -194,29 +194,26 @@
           {{ msgObligatorioContacto }}
         </div>
       </div>
+      <div class="row col-4">
+        <label>Perfiles*</label>
+        <mat-form-field>
+          <mat-label>Perfil</mat-label>
+          <mat-select formControlName="perfiles" multiple>
+            <div *ngFor="let perfil of perfiles">
+              <mat-option [value]="perfil.idPerfil">{{ perfil.nombrePerfil }}</mat-option>
+            </div>
+          </mat-select>
+        </mat-form-field>
 
-      <div class="col-4 p-3">
-        <label>Cargo*</label>
-
-        <select
-          class="form-select"
-          [ngClass]="{
-            'input-req': isRequired('tipDoc') && mostrarValidaciones
-          }"
-          formControlName="tipDoc"
-        >
-          <option disabled value="">Cargo</option>
-          <option *ngFor="let cargo of cargos" [value]="cargo.id_Dominio">
-            {{ cargo.nombre_Dominio }}
-          </option>
-        </select>
         <div
           class="msj-req"
-          *ngIf="isRequired('tipDoc') && mostrarValidaciones"
+          *ngIf="isRequired('perfiles') && mostrarValidaciones"
         >
           {{ msgObligatorio }}
         </div>
       </div>
+
+
     </div>
 
     <div class="row p-3 mt-3">

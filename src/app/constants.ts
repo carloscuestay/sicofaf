@@ -49,6 +49,7 @@ export const Mensajes = {
   MENSAJE_SEG_EXITO: `Seguimiento creado exitosamente`,
   MENSAJE_EXITO: `Se guardó exitosamente`,
   MENSAJE_EXITO_PERFIL: `Perfil registrado de manera exitosa.`,
+  MENSAJE_EXITO_ACTUALIZAR_PERFIL: `Perfil actualizado de manera exitosa.`,
 };
 
 export const Regex = {
