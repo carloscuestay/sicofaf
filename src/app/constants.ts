@@ -67,6 +67,7 @@ export const CodigosPerfil = {
   PSICOLOGO: 'PSI',
   TRABAJADORSOCIAL: 'TSO',
   ADMINISTRADOR: 'ADM',
+  
 };
 
 export const MensajeSolicitudXPerfil = {

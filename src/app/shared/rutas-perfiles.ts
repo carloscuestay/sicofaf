@@ -184,8 +184,6 @@ export const perfilTrabajadorSocial: MenuInterface[] = [
   },
 ];
 
-
-
 export const perfilAdministrador: MenuInterface[] = [
   {
     titulo: 'Administración',
