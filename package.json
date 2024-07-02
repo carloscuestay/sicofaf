@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "sicofa",
+=======
+  "name": "co-1030-comisaria",
+>>>>>>> sicofa-dev-york
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -47,10 +51,16 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@angular-builders/jest": "latest",
     "@angular-devkit/build-angular": "~13.3.3",
     "@angular/cli": "~13.3.3",
     "@angular/compiler-cli": "~13.3.0",
+=======
+    "@angular-devkit/build-angular": "~13.3.11",
+    "@angular/cli": "~13.3.11",
+    "@angular/compiler-cli": "~13.3.11",
+>>>>>>> sicofa-dev-york
     "@briebug/jest-schematic": "^2.1.1",
     "@ngrx/schematics": "^13.2.0",
     "@types/file-saver": "^2.0.5",

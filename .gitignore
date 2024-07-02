@@ -1,7 +1,11 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # Compiled output
+<<<<<<< HEAD
 /dist
+=======
+
+>>>>>>> sicofa-dev-york
 /tmp
 /out-tsc
 /bazel-out
