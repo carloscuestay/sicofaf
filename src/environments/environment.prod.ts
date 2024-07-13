@@ -1,7 +1,8 @@
 export const environment = {
   production: true,
   name: 'production',
-  path: 'https://app-back-co1030-prod.azurewebsites.net/api',
+  path: 'https://172.210.178.254/api',
+  
   JWT_TOKEN: 'JWT_TOKEN',
   USER_INFO: 'USER_INFO',
   PERFILES_COMISARIAS: 'PERFILES_COMISARIAS',
