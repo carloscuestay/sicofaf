@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   name: 'development',
-  //path: '',
-  path: 'http://10.0.0.4:8081/api',
+  //path: 'https://localhost:7162/api',
+  path: 'http://172.210.178.254/api',
   JWT_TOKEN: 'JWT_TOKEN',
   USER_INFO: 'USER_INFO',
   PERFILES_COMISARIAS: 'PERFILES_COMISARIAS',

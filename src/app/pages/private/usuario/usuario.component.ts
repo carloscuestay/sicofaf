@@ -11,6 +11,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { ResponseInterface } from 'src/app/interfaces/response.interface';
 import { CodigosRespuesta, Mensajes } from 'src/app/constants';
 import { Modales } from 'src/app/shared/modals';
+import { UsuarioService } from './services/usuario.service';
+import { SharedService } from 'src/app/services/shared.service';
+import * as interfaces from './../interfaces/ciudadano.interface';
 
 @Component({
   selector: 'app-usuario',
@@ -19,11 +22,12 @@ import { Modales } from 'src/app/shared/modals';
 })
 export class UsuarioComponent implements OnInit {
 
- 
+
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   public columnas: string[] = ['nombres', 'apellidos', 'tipo_documento', 'numero_documento'
-    , 'numero_solicitudes', 'fecha_ult_solicitud', 'accion'];
+    , 'cargo', 'accion'
+  ];
 
   public dataSource = new MatTableDataSource<CiudadanoInterface>([]);
   public listaCiudadano: CiudadanoInterface[] = [];
@@ -33,12 +37,15 @@ export class UsuarioComponent implements OnInit {
   public ocultarPaginador: boolean = true;
   public mostrarOcultarBoton: boolean = true;
   currentUser!: UserInterface | undefined;
+  public selectTipoDocumento: interfaces.DominioInterface[] = [];
 
   constructor(private ciudadanoService: CiudadanoService, private router: Router,
     private fb: FormBuilder,
     private dialog: MatDialog,
     private authService: AuthService,
-    ) { 
+    private _usuarioService: UsuarioService,
+    private sharedService: SharedService,
+    ) {
       this.currentUser = this.authService.currentUserValue;
     }
 
@@ -54,8 +61,24 @@ export class UsuarioComponent implements OnInit {
     });
     sessionStorage.removeItem('idC');
     sessionStorage.removeItem('ciudadano');
+    this.cargaSelectTipoDocumento();
   }
 
+  private cargaSelectTipoDocumento() {
+    this.sharedService
+      .getDominio('Tipo_identificacion')
+      .subscribe((TipoDocumento) => {
+        if (TipoDocumento.statusCode === CodigosRespuesta.OK) {
+          this.selectTipoDocumento = TipoDocumento.data;
+        }
+      });
+  }
+
+  obtenerTipoDocmuento(id: number): string {
+    let tipoDocmuento= this.selectTipoDocumento.filter(x=> x.id_Dominio== id);
+    return (tipoDocmuento[0].nombre_Dominio);
+
+  }
 
   registrarUsuario(){
     this.router.navigate(['/registro-usuario']);
@@ -67,10 +90,10 @@ export class UsuarioComponent implements OnInit {
     consultarCiudadano() {
 
       this.validarCampoObligatorio();
-  
+
       if (this.ciudadanoForm.valid) {
         this.formSubmitted = true;
-        this.ciudadanoService.getCiudadanos(this.ciudadanoForm.value)
+        this._usuarioService.getUsuario(this.ciudadanoForm.value)
           .subscribe({
             next: (data: ResponseInterface) => {
               if (data.statusCode === CodigosRespuesta.OK) {
@@ -94,8 +117,8 @@ export class UsuarioComponent implements OnInit {
         this.mostrarValidaciones = true;
       }
     }
-  
-  
+
+
     /**
      * @description limpia los registros de la grilla
      */
@@ -104,23 +127,23 @@ export class UsuarioComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.listaCiudadano);
       this.mostrarValidaciones = false;
     }
-  
-  
+
+
     /**
      * @description valida que el form sea correcto para llamar servicio de consulta
      */
     validarCampoObligatorio() {
-  
+
       const { nombre_ciudadano, apellido_ciudadano, numero_documento } = this.ciudadanoForm.value;
-  
+
       if (nombre_ciudadano && apellido_ciudadano || numero_documento) {
         this.ciudadanoForm.controls['obl'].setValue('ok');
       } else {
         this.ciudadanoForm.controls['obl'].setValue(null);
       }
-  
+
     }
-  
+
     /**
      * @description valida que los campos sean obligatorios o requeridos
      * @param campo variable para ingresar el campo requerido
@@ -132,8 +155,8 @@ export class UsuarioComponent implements OnInit {
         return false;
       }
     }
-  
-  
+
+
     /**
      * @description envía a form historial del ciudadano
      * @param idCiudadano id del ciudadano

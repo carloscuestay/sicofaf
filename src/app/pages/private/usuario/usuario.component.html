@@ -6,7 +6,7 @@
       Nuevo Usuario
     </button>
   </div>
-  
+
   <p class="subtitle-medium">
     Encuentre los usuarios que previamente han sido registrados en el sistema
   </p>
@@ -76,4 +76,79 @@
   <div *ngIf="isRequired('obl') && mostrarValidaciones" class="msj-req">
     Los campos de nombre y apellido o número de documento son obligatorios
   </div>
+</div>
+
+<div class="background-content-private p-2 mb-4" *ngIf="formSubmitted">
+  <p class="title-content">RESULTADOS DE BÚSQUEDA</p>
+
+  <div class="not-data-grid w-75" *ngIf="dataSource.data.length === 0">
+    <app-no-data
+      mensaje="No se han encontrado ciudadanos con los criterios de búsqueda ingresados. Proceda al registro del ciudadano en el sistema."
+    >
+    </app-no-data>
+  </div>
+  <mat-table
+    [dataSource]="dataSource"
+    id="table-private"
+    *ngIf="dataSource.data.length > 0"
+  >
+    <ng-container matColumnDef="nombres">
+      <mat-header-cell *matHeaderCellDef> Nombres </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{ row.nombres }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="apellidos">
+      <mat-header-cell *matHeaderCellDef> Apellidos </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{ row.apellidos }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="tipo_documento">
+      <mat-header-cell *matHeaderCellDef> T. de Doc </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <div style="width: 100px;">
+          {{obtenerTipoDocmuento(row.idTipoDocumento)}}
+        </div>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="numero_documento">
+      <mat-header-cell *matHeaderCellDef> No. de Doc </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{ row.numeroDocumento }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="cargo">
+      <mat-header-cell *matHeaderCellDef>Cargo</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{ row.cargo }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="accion">
+      <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button
+          mat-icon-button
+          matTooltip="Visualizar"
+          matTooltipPosition="right"
+          matTooltipHideDelay="500"
+          matTooltipClass="background-tooltip"
+          aria-label="Button that displays a tooltip when focused or hovered over"
+          (click)="verHistorialCiudadano(row)"
+        >
+          <img src="assets/images/eye.svg" alt="detail" class="img-fluid" />
+        </button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnas"></mat-row>
+  </mat-table>
+</div>
+<div class="mt-5" [hidden]="ocultarPaginador">
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Select page of request"
+  >
+  </mat-paginator>
 </div>
