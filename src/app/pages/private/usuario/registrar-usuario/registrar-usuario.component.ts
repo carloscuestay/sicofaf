@@ -345,17 +345,14 @@ export class RegistrarUsuarioComponent implements OnInit {
    * @description para registrar nuevo ciudadano se valida que no exista en Base de Datos y si no existe, lo registra
    */
   public registrar(): void {
-    console.table(this.myForm.value)
     this.mostrarValidaciones = false;
 
     if (this.myForm.invalid) {
       this.mostrarValidaciones = true;
-      console.log("invalido")
     } else {
       if (this.isUpdate) {
         //this.actualizarCiudadano();
       } else {
-        console.log("nvalido")
         this.insertarCiudadano();
       }
     }

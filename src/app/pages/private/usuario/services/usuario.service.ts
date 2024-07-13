@@ -15,7 +15,6 @@ export class UsuarioService {
   constructor(private http: HttpClient) {}
 
   public registrarUsuario(request: IUsuario): Observable<ResponseInterface> {
-    console.log(request)
     return this.http.post<ResponseInterface>(
       `${this.api}/Usuario/CrearUsuario`,request
     );
@@ -29,4 +28,12 @@ export class UsuarioService {
       }
     );
   }
+
+  public getUsuario(data: FormData): Observable<ResponseInterface> {
+    return this.http.post<ResponseInterface>(
+      `${this.api}/Usuario/consultarUsuario`,
+      data
+    );
+  }
+
 }
