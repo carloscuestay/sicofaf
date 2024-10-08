@@ -53,7 +53,6 @@ export class AuthService {
   }
 
   login(loginReq: any): Observable<ResponseInterface> {
-    console.log(this.api);
     return this.http
       .post<any>(`${this.api}/Ingreso`, loginReq)
       .pipe(tap((resp: ResponseInterface) => this.save(resp)));
@@ -65,11 +64,13 @@ export class AuthService {
   cerrarSesion() {
     sessionStorage.clear();
     this.currentUserValue = undefined;
+    window.location.reload();
     this.router.navigate(['./login']);
   }
 
   private save(resp: ResponseInterface) {
     if (resp.statusCode === 200) {
+
       sessionStorage.setItem(environment.JWT_TOKEN, resp.data.token);
       sessionStorage.setItem(
         environment.PERFILES_COMISARIAS,

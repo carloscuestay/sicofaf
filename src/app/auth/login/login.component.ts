@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
    * @description
    */
   iniciarSesion() {
+
     if (this.formLogin.valid) {
       const { usuario, password } = this.formLogin.value;
 
